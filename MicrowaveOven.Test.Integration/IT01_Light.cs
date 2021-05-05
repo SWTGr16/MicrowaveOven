@@ -7,6 +7,10 @@ namespace MicrowaveOven.Test.Integration
     [TestFixture]
     public class IT01_Light
     {
+        //Integrationtest 01:
+        //Light = T
+        //Output = X
+
         private Light _light;
         private Output _output;
         public StringWriter _stringWriter;
@@ -15,21 +19,25 @@ namespace MicrowaveOven.Test.Integration
         public void Setup()
         {
             _output = new Output();
-            _light = new Light(_output); //Constructor har én parameter
+            _light = new Light(_output); //Constructor tager én parameter
             _stringWriter = new StringWriter();
+            System.Console.SetOut(_stringWriter);
         }
 
         [Test]
-        public void isOn_isTrue_TurnOn_Output_LightIsTurnedOn()
+        public void TurnOn_Output_LightIsTurnedOn()
         {
             _light.TurnOn();
-            Assert.That(_stringWriter.ToString().Equals("Light is turned on"));
+            Assert.That(_stringWriter.ToString().Contains("turned on"));
         }
 
-        public void isOn_isFalse_TurnOff_Output_LightIsTurnedOff()
+        [Test]
+        public void TurnOff_Output_LightIsTurnedOff()
         {
+            _light.TurnOn(); 
             _light.TurnOff();
-            Assert.That(_stringWriter.ToString().Equals("Light is turned off"));
+
+            Assert.That(_stringWriter.ToString().Contains("turned off"));
         }
     }
 }
