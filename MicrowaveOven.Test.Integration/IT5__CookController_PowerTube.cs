@@ -34,11 +34,10 @@ namespace MicrowaveOven.Test.Integration
             _output = new Output();
             _powerTube = new PowerTube(_output);
 
-
             _display = Substitute.For<IDisplay>();
             _timer = Substitute.For<ITimer>();
             _uI = Substitute.For<IUserInterface>();
-            _cookC = new CookController(_timer, _display, _powerTube);
+            _cookC = new CookController(_timer, _display, _powerTube, _uI);
             _sW = new StringWriter();
             Console.SetOut(_sW);
         }
@@ -60,32 +59,37 @@ namespace MicrowaveOven.Test.Integration
 
         [TestCase(49)]
         [TestCase(701)]
-        public void Start_CookingPower60__PowerTube_On__Power_OutOfRange_Exception(int power)
+        public void Start_CookingPower60__PowerTube_On__ThrowsFromArgumentOutOfRangeException(int power)
         {
             Assert.That(() => _cookC.StartCooking(power, 60), Throws.TypeOf<ArgumentOutOfRangeException>());
         }
 
         [Test]
-        public void Start_Cooking5060__PowerTube_On__PowerTube_IsAlreadyOn()
+        public void Start_Cooking5060__PowerTube_On__PowerTube_AlreadyOn_ThrowsFromApplicationException()
         {
             _cookC.StartCooking(50, 60);
             Assert.That(() => _cookC.StartCooking(50, 60), Throws.TypeOf<ApplicationException>());
         }
-
         #endregion
 
         #region PowerTube off
-        //MANGLER MULIGVIS AT TESTE NÅR TIMER EXPIRED
+        [Test]
+        public void Timer_Expired__PowerTube_Off()
+        {
+            _cookC.StartCooking(50, 60);
+            _timer.Expired += Raise.EventWith(this, EventArgs.Empty);
+
+            Assert.That(_sW.ToString().Contains("off"));
+        }
 
         [Test]
-        public void Stop_Cooking5060__PowerTube_Off__PowerTube_IsOff()
+        public void Stop_Cooking5060__PowerTube_Off()
         {
             _cookC.StartCooking(50, 60);
             _cookC.Stop();
 
             Assert.That(_sW.ToString().Contains("off"));
         }
-
         #endregion
 
     }
