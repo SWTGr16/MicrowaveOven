@@ -45,7 +45,7 @@ namespace MicrowaveOven.Test.Integration
 
         #region PowerTube On
         [Test]
-        public void Start_Cooking__PowerTube_On__ThrowsNothing()
+        public void Start_Cooking5060__PowerTube_On__ThrowsNothing()
         {
             Assert.That(() => _cookC.StartCooking(50, 60), Throws.Nothing);
         }
@@ -66,7 +66,7 @@ namespace MicrowaveOven.Test.Integration
         }
 
         [Test]
-        public void Start_Cooking__PowerTube_On__PowerTube_IsAlreadyOn()
+        public void Start_Cooking5060__PowerTube_On__PowerTube_IsAlreadyOn()
         {
             _cookC.StartCooking(50, 60);
             Assert.That(() => _cookC.StartCooking(50, 60), Throws.TypeOf<ApplicationException>());
@@ -78,7 +78,7 @@ namespace MicrowaveOven.Test.Integration
         //MANGLER MULIGVIS AT TESTE NÅR TIMER EXPIRED
 
         [Test]
-        public void StopCooking_PowerTubeTurnOff_PowerTubeIsTurnedOff()
+        public void Stop_Cooking5060__PowerTube_Off__PowerTube_IsOff()
         {
             _cookC.StartCooking(50, 60);
             _cookC.Stop();
