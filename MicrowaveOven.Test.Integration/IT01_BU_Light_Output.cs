@@ -5,7 +5,7 @@ using Microwave.Classes.Controllers;
 namespace MicrowaveOven.Test.Integration
 {
     [TestFixture]
-    public class IT01_Light
+    public class IT01_BU_Light_Output
     {
         //Integrationtest 01:
         //Light = T

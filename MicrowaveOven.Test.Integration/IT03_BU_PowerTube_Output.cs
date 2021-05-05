@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace MicrowaveOven.Test.Integration
 {
     [TestFixture]
-    public class IT03_PowerTube
+    public class IT03_BU_PowerTube_Output
     {
         //Integrationstest 03:
         //PowerTube = T

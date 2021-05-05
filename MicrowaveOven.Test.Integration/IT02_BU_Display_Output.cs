@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace MicrowaveOven.Test.Integration
 {
     [TestFixture]
-    public class IT02_Display
+    public class IT02_BU_Display_Output
     {
         //Integrationstest 02:
         //Display = T

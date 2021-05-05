@@ -11,7 +11,7 @@ using NUnit.Framework.Internal.Execution;
 namespace MicrowaveOven.Test.Integration
 {
     [TestFixture]
-    public class T8_TD_LightAndDisplay
+    public class IT08_TD_UserInterface_LightAndDisplay
     {
         private UserInterface _userInterface;
         private IDoor _door;

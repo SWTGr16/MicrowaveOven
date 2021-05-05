@@ -11,7 +11,7 @@ using System.IO;
 namespace MicrowaveOven.Test.Integration
 {
     [TestFixture]
-    public class IT5_CookControllerPowerTube
+    public class IT05_BU_CookController_PowerTube
     {
         //Testdriver
         private CookController _cookC;

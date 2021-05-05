@@ -9,7 +9,7 @@ using System.IO;
 namespace MicrowaveOven.Test.Integration
 {
     [TestFixture]
-    public class IT4__CookController_Display
+    public class IT04_BU_CookController_Display
     {
         //Testdriver
         private CookController _cookC;
@@ -21,7 +21,6 @@ namespace MicrowaveOven.Test.Integration
         //Fakes
         private IPowerTube _powerTube;
         private ITimer _timer;
-        private IUserInterface _uI;
 
         //StringWriter
         private StringWriter _sW;
@@ -34,7 +33,6 @@ namespace MicrowaveOven.Test.Integration
 
             _powerTube = Substitute.For<IPowerTube>();
             _timer = Substitute.For<ITimer>();
-            _uI = Substitute.For<IUserInterface>();
             _cookC = new CookController(_timer, _display, _powerTube);
             _sW = new StringWriter();
             Console.SetOut(_sW);
