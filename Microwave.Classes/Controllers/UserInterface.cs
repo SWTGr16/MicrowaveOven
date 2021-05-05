@@ -41,6 +41,7 @@ namespace Microwave.Classes.Controllers
             myDisplay = display;
         }
 
+       
         private void ResetValues()
         {
             powerLevel = 50;
