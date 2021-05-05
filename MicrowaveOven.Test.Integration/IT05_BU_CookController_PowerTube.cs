@@ -43,49 +43,49 @@ namespace MicrowaveOven.Test.Integration
         }
 
         #region PowerTube On
-        [Test]
-        public void Start_Cooking5060__PowerTube_On__ThrowsNothing()
+        [TestCase(50, 60)]
+        public void Start_Cooking5060__PowerTube_On__ThrowsNothing(int power, int time)
         {
-            Assert.That(() => _cookC.StartCooking(50, 60), Throws.Nothing);
+            Assert.That(() => _cookC.StartCooking(power, time), Throws.Nothing);
         }
 
 
-        [Test]
-        public void Start_Cooking5060__PowerTube_On__PowerTube_IsOn()
+        [TestCase(50, 60)]
+        public void Start_Cooking5060__PowerTube_On__PowerTube_IsOn(int power, int time)
         {
-            _cookC.StartCooking(50, 60);
+            _cookC.StartCooking(power, time);
             Assert.That(_sW.ToString().Contains("PowerTube works with"));
         }
 
-        [TestCase(49)]
-        [TestCase(701)]
-        public void Start_CookingPower60__PowerTube_On__ThrowsFromArgumentOutOfRangeException(int power)
+        [TestCase(45, 60)]
+        [TestCase(701, 60)]
+        public void Start_CookingPower60__PowerTube_On__ThrowsFromArgumentOutOfRangeException(int power, int time)
         {
-            Assert.That(() => _cookC.StartCooking(power, 60), Throws.TypeOf<ArgumentOutOfRangeException>());
+            Assert.That(() => _cookC.StartCooking(power, time), Throws.TypeOf<ArgumentOutOfRangeException>());
         }
 
-        [Test]
-        public void Start_Cooking5060__PowerTube_On__PowerTube_AlreadyOn_ThrowsFromApplicationException()
+        [TestCase(50, 60)]
+        public void Start_Cooking5060__PowerTube_On__PowerTube_AlreadyOn_ThrowsFromApplicationException(int power, int time)
         {
-            _cookC.StartCooking(50, 60);
-            Assert.That(() => _cookC.StartCooking(50, 60), Throws.TypeOf<ApplicationException>());
+            _cookC.StartCooking(power, time);
+            Assert.That(() => _cookC.StartCooking(power, time), Throws.TypeOf<ApplicationException>());
         }
         #endregion
 
         #region PowerTube off
-        [Test]
-        public void Timer_Expired__PowerTube_Off()
+        [TestCase(50, 60)]
+        public void Timer_Expired__PowerTube_Off(int power, int time)
         {
-            _cookC.StartCooking(50, 60);
+            _cookC.StartCooking(power, time);
             _timer.Expired += Raise.EventWith(this, EventArgs.Empty);
 
             Assert.That(_sW.ToString().Contains("off"));
         }
 
-        [Test]
-        public void Stop_Cooking5060__PowerTube_Off()
+        [TestCase(50, 60)]
+        public void Stop_Cooking5060__PowerTube_Off(int power, int time)
         {
-            _cookC.StartCooking(50, 60);
+            _cookC.StartCooking(power, time);
             _cookC.Stop();
 
             Assert.That(_sW.ToString().Contains("off"));
