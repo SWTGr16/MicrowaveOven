@@ -15,6 +15,8 @@ namespace MicrowaveOven.Test.Integration
     [TestFixture]
     public class IT06_BU_CookController_Timer
     {
+        //  Denne test er ikke udført, se følgende afsnit i rapporten: "Resultater".
+
         //Testdriver
         private CookController _cookC;
 
@@ -44,6 +46,6 @@ namespace MicrowaveOven.Test.Integration
             Console.SetOut(_sW);
         }
 
-        //Denne test er ikke udført, se følgende afsnit i rapporten: "Konklusion".
+        
     }
 }
