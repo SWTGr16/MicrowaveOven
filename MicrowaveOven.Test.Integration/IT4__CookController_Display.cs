@@ -4,8 +4,6 @@ using Microwave.Classes.Interfaces;
 using NUnit.Framework;
 using NSubstitute;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
 
 namespace MicrowaveOven.Test.Integration
@@ -14,7 +12,7 @@ namespace MicrowaveOven.Test.Integration
     public class IT4__CookController_Display
     {
         //Testdriver
-        public CookController _ck;
+        private CookController _cookC;
 
         //Egentlige klasser
         private Display _display;
@@ -23,7 +21,7 @@ namespace MicrowaveOven.Test.Integration
         //Fakes
         private IPowerTube _powerTube;
         private ITimer _timer;
-        private IUserInterface _userInterface;
+        private IUserInterface _uI;
 
         //StringWriter
         private StringWriter _sW;
@@ -31,28 +29,30 @@ namespace MicrowaveOven.Test.Integration
         [SetUp]
         public void Setup()
         {
-            
-
             _output = new Output();
             _display = new Display(_output);
 
             _powerTube = Substitute.For<IPowerTube>();
             _timer = Substitute.For<ITimer>();
-            _userInterface = Substitute.For<IUserInterface>();
-            _ck = new CookController(_timer, _display, _powerTube);
+            _uI = Substitute.For<IUserInterface>();
+            _cookC = new CookController(_timer, _display, _powerTube);
             _sW = new StringWriter();
             Console.SetOut(_sW);
         }
 
-        [TestCase("00","30")]
-        [TestCase("01", "22")]
+        [TestCase("00", "30")]
+        [TestCase("01", "01")]
+        [TestCase("01", "33")]
         [TestCase("02", "00")]
+        [TestCase("02", "27")]
         public void TimeRemaining_On_Display_In_MinutesAndSeconds(string min, string sec)
         {
+            _cookC.StartCooking(50, 60);
             _timer.TimeRemaining.Returns(Convert.ToInt32(min) * 60 + Convert.ToInt32(sec));
             _timer.TimerTick += Raise.EventWith(this, EventArgs.Empty);
 
-            Assert.That(_sW.ToString().Contains(min+":"+sec));
+            Assert.That(_sW.ToString().Contains(min));
+            Assert.That(_sW.ToString().Contains(sec));
         }
     }
 }
